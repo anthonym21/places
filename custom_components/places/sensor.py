@@ -345,7 +345,7 @@ class Places(Entity):
         self._place_category = None
         self._place_neighbourhood = None
         self._home_latitude = home_latitude
-        self._home_longitude = home_longitude 
+        self._home_longitude = home_longitude
         self._latitude_old = home_latitude
         self._longitude_old = home_longitude
         self._latitude = home_latitude
@@ -354,20 +354,25 @@ class Places(Entity):
         self._mtime = str(datetime.now())
         self._distance_km = 0
         self._distance_m = 0
-        self._location_current = home_latitude + ',' + home_longitude
-        self._location_previous = home_latitude + ',' + home_longitude
+        self._location_current = f'{home_latitude},{home_longitude}'
+        self._location_previous = f'{home_latitude},{home_longitude}'
         self._updateskipped = 0
         self._direction = 'stationary'
         self._map_link = None
         #'https://www.google.com/maps/@' + home_latitude + "," + home_longitude + ',19z'
 
         # Check if devicetracker_id was specified correctly
-        _LOGGER.info( "(" + self._name + ") DeviceTracker Entity ID is " + devicetracker_id.split('.', 1)[1] )
+        _LOGGER.info(
+            f"({self._name}) DeviceTracker Entity ID is "
+            + devicetracker_id.split('.', 1)[1]
+        )
 
         if devicetracker_id.split('.', 1)[0] in TRACKABLE_DOMAINS:
             self._devicetracker_id = devicetracker_id
             track_state_change(hass, self._devicetracker_id, self.tsc_update, from_state=None, to_state=None)
-            _LOGGER.info( "(" + self._name + ") Now subscribed to state change events from " + self._devicetracker_id )
+            _LOGGER.info(
+                f"({self._name}) Now subscribed to state change events from {self._devicetracker_id}"
+            )
 
     @property
     def name(self):
